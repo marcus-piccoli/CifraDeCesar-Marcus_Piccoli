@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifra de César</title>
+</head>
+
+<body>
+    <h2>Cifra de César</h2>
+    <label for="Deslocamento">Deslocamento:</label><br>
+    <input type="number" id="idDeslocamento" name="nmDeslocamento"><br><br>
+    <label for="input">Texto:</label><br>
+    <textarea id="idInput" name="nmInput" rows="4" cols="50"></textarea><br><br>
+    <button onclick="codificar()">Codificar</button>
+    <button onclick="decodificar()">Decodificar</button><br><br>
+    <label for="output">Resultado:</label><br>
+    <textarea id="idOut" name="nmOut" rows="4" cols="50"></textarea>
+
+    <script>
+        function cifraCesar(string, deslocamento, direcao) {
+            return string.split('').map(function (char) {
+                let letra = char.charCodeAt(0);
+                if (letra >= 65 && letra <= 90) {
+                    let base = 65
+                    let novaLetra = ((letra - base + deslocamento * direcao) % 26 + 26) % 26 + base
+                    return String.fromCharCode(novaLetra)
+                } else if (letra >= 97 && letra <= 122) {
+                    let base = 97
+                    let novaLetra = ((letra - base + deslocamento * direcao) % 26 + 26) % 26 + base
+                    return String.fromCharCode(novaLetra)
+                }
+                return char //Retorna sem alterações caso não seja letra
+            }).join('')
+        }
+
+        function codificar() {
+            let deslocamento = parseInt(document.getElementById('idDeslocamento').value)
+            let input = document.getElementById('idInput').value
+            document.getElementById('idOut').value = cifraCesar(input, deslocamento, 1)
+        }
+
+        function decodificar() {
+            let deslocamento = parseInt(document.getElementById('idDeslocamento').value)
+            let input = document.getElementById('idInput').value
+            document.getElementById('idOut').value = cifraCesar(input, deslocamento, -1)
+        }
+    </script>
+</body>
+
+</html>
